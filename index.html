@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Niduu</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fbe7ef;
+            font-family: "Poppins", sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 50px;
+            border-radius: 25px;
+            width: 380px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 0, 90, 0.25);
+            animation: bounce 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        h1 {
+            font-family: "Dancing Script", cursive;
+            font-size: 36px;
+            color: #e91e63;
+            margin-bottom: 15px;
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { text-shadow: 0 0 5px #ff7eb3; }
+            50% { text-shadow: 0 0 15px #ff2d75; }
+            100% { text-shadow: 0 0 5px #ff7eb3; }
+        }
+
+        p {
+            color: #444;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .heart {
+            font-size: 55px;
+            margin-top: 15px;
+            animation: beat 1s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+            100% { transform: scale(1); }
+        }
+
+        /* Petals */
+        .petal {
+            position: fixed;
+            top: -10px;
+            font-size: 24px;
+            opacity: 0.9;
+            animation: fall linear infinite;
+            pointer-events: none;
+            filter: drop-shadow(0 0 6px rgba(255,0,80,0.4));
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(140deg); opacity: 0; }
+        }
+
+        /* Popup */
+        #popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn .4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-box {
+            background: white;
+            padding: 25px 30px;
+            width: 300px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(255, 0, 90, 0.25);
+            animation: pop .35s ease;
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            margin-top: 15px;
+            background: #e91e63;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Fade-in birthday message */
+#fadeMessage { transition: opacity 2.5s ease; }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; transform: translateY(20px); }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Happy Birthday Niduu 💞</h1>
+
+        <div class="typewriter"><!-- I wanted your day to feel a little  --> </div>
+
+        <P>
+            I’m honestly bad at these things <br>
+but for you, I tried my best.
+<br>
+Happy Birthday ✨<br>
+There’s something about your aura...soft, calm, and effortlessly charming
+that stays in mind longer than you think.
+<br>
+Have a lovely day 💗
+        </P>
+        <!--
+       
+        <p>You deserve sweetness, comfort, and a heart that always smiles for you.//</p>
+ -->
+        <div class="heart" onclick="heartBurst()">❤️</div>
+<p class="tap-hint" style="font-size:14px; color:#e91e63; margin-top:8px; opacity:0.8;">Tap the heart💗</p>
+    </div>
+
+    <!-- Tap to Reveal Message -->
+<div id="fadeMessage" onclick="revealMessage()" style="opacity:0; pointer-events:none; position: fixed; bottom: 40px; width: 100%; text-align: center; font-size: 22px; color: #d81b60; font-family: 'Dancing Script', cursive;">
+    Happy Birthday, Nida… 💗 May your day feel soft, warm, and magical.
+</div>
+
+    <!-- Popup -->
+    <div id="popup">
+        <div class="popup-box">
+            <h3 style="color:#e91e63; font-family:'Dancing Script', cursive; font-size:28px;">💗 A Little Secret 💗</h3>
+            <p style="font-size:16px; color:#444;">I hope this year gives you the comfort, clarity, and happiness you deserve.
+And if life allows it…
+I hope we end up getting the thing our hearts quietly want.<br>
+See you soon</p>
+            <button class="close-btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        /* Falling petals */
+        const petals = ["🌹", "💗", "💞", "🎈", "❣️", "✨"];    
+        function createPetal() {
+            const petal = document.createElement("div");
+            petal.classList.add("petal");
+            petal.innerText = petals[Math.floor(Math.random() * petals.length)];
+            petal.style.left = Math.random() * 100 + "vw";
+            petal.style.animationDuration = 7 + Math.random() * 8 + "s";
+            petal.style.fontSize = 20 + Math.random() * 15 + "px";
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 15000);
+        }
+        setInterval(createPetal, 300);
+
+        /* Popup */
+        function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        /* Tap to reveal function */
+function revealMessage() {
+    const msg = document.getElementById('fadeMessage');
+    msg.style.opacity = 1;
+}
+
+/* Heart explosion */
+        function heartBurst() {
+            for (let i = 0; i < 20; i++) {
+                const h = document.createElement("div");
+                h.innerText = "💖";
+                h.style.position = "fixed";
+                h.style.left = (window.innerWidth / 2) + "px";
+                h.style.top = (window.innerHeight / 2) + "px";
+                h.style.fontSize = (20 + Math.random() * 25) + "px";
+                h.style.transition = 'transform 1.2s ease, opacity 1.2s';
+                document.body.appendChild(h);
+
+                setTimeout(() => {
+                    h.style.transform = `translate(${(Math.random()*300)-150}px, ${(Math.random()*300)-150}px)`;
+                    h.style.opacity = 0;
+                }, 50);
+
+                setTimeout(() => h.remove(), 1500);
+            }
+
+            openPopup();
+        }
+    </script>
+
+</body>
+</html>
